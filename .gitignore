@@ -12,5 +12,5 @@ env
 .zip
 Datasets
 #Saved models
-*.pth
+updated_again_model_2600.pth
 *.sqlite

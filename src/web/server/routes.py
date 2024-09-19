@@ -15,7 +15,7 @@ model_folder_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'
 model_file_path = os.path.join(model_folder_path, 'savedModels/updated_again_model_current.pth')
 
 model = ChessNet()
-model.load_state_dict(torch.load(model_file_path))
+model.load_state_dict(torch.load(model_file_path, map_location=torch.device('cpu')))
 model.eval()
 
 @app.route('/new_game/<player>', methods=['POST'])
