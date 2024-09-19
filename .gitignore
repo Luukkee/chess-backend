@@ -1,0 +1,16 @@
+# Byte-compiled 
+__pycache__
+#Virtual environment
+venv
+env
+.venv
+.env
+#datasets and database
+*.db
+*.db-shm
+*.db-wal
+.zip
+Datasets
+#Saved models
+*.pth
+*.sqlite
