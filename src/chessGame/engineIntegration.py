@@ -12,7 +12,6 @@ except ImportError:
 import chess
 import chess.pgn
 import random
-import numpy as np
 #from model import eco, ChessNet
 
 
