@@ -14,3 +14,5 @@ Datasets
 #Saved models
 updated_again_model_2600.pth
 *.sqlite
+node_modules
+*.pth

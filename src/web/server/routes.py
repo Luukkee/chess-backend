@@ -1,7 +1,7 @@
 import sys, os
 from models import *
 from dataBase import app
-from flask import abort, request, redirect
+from flask import abort, request, redirect, send_from_directory, send_file
 from flask import jsonify, json, url_for
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../..')))
 
@@ -11,15 +11,30 @@ from chessGame import Board
 from chessGame import ChessNet
 import torch
 
-model_folder_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', 'model'))
-model_file_path = os.path.join(model_folder_path, 'savedModels/updated_again_model_current.pth')
+#model_folder_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', 'model'))
+#model_file_path = os.path.join(model_folder_path, 'savedModels/updated_again_model_current.pth')
 
-model = ChessNet()
-model.load_state_dict(torch.load(model_file_path, map_location=torch.device('cpu')))
-model.eval()
+#model = ChessNet()
+#model.load_state_dict(torch.load(model_file_path, map_location=torch.device('cpu')))
+#model.eval()
+
+@app.before_first_request
+def initialize():
+    app.logger.info("Database connection initialized")
+
+@app.route('/')
+def index():
+    app.logger.info('Serving index.html')
+    return send_file(os.path.join(app.static_folder, 'index.html'))
+
+@app.route('/<path:filename>')
+def serve_static(filename):
+    print(f"Serving static file: {filename}")
+    return send_from_directory(app.static_folder, filename)
 
 @app.route('/new_game/<player>', methods=['POST'])
 def new_game(player):
+    app.logger.info(f"new_game route hit with player_color: {player_color}")
     print(player)
     # Create a new game
     player_color = "white" if player=="1" else "black"
@@ -131,3 +146,8 @@ def get_game(game_id):
 #    
 #    moves = piece.get_moves(board, row, col)
 #    return jsonify({"status": "success", "moves": moves})
+
+@app.errorhandler(404)
+def not_found_error(error):
+    app.logger.error(f'404 error: {error}')
+    return 'File not found', 404

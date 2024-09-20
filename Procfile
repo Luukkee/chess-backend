@@ -1,1 +1,1 @@
-web: gunicorn src.web.server.dataBase:app
+web: npm run build && gunicorn src.web.server.dataBase:app
