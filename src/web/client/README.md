@@ -1,4 +1,4 @@
-# chess-engine-online
+# Frontend
 
 Frontend implementation for this [chess engine](https://github.com/Skripkon/chess-engine)
 
